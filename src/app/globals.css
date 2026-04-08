@@ -1,0 +1,191 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+@import "tailwindcss";
+
+:root {
+  --background: #09080e;
+  --foreground: #ffffff;
+  /* 반응형: 헤더 높이 · #앵커 스크롤 보정 (lg 1024 / 태블릿·모바일 / 초소형 400) */
+  --header-h: 103px;
+  --section-scroll-mt: 103px;
+}
+
+@media (max-width: 1023px) {
+  :root {
+    --header-h: 72px;
+    --section-scroll-mt: 72px;
+  }
+}
+
+@media (max-width: 399px) {
+  :root {
+    --header-h: 58px;
+    --section-scroll-mt: 58px;
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: "Pretendard Variable", Pretendard, var(--font-geist-sans), system-ui,
+    sans-serif;
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "Pretendard Variable", Pretendard, var(--font-geist-sans), system-ui,
+    sans-serif;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* WHY STANCE 6블록만 — 섹션(공간) 호버 시 네온 스크리블 밑줄 */
+.stance-scribble-title {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.28em;
+}
+
+.stance-scribble-title::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  /* 글자보다 좌우로 살짝 길게 */
+  left: -0.42em;
+  width: calc(100% + 0.84em);
+  bottom: 0;
+  height: 0.42em;
+  min-height: 11px;
+  pointer-events: none;
+  /* 브러시 PNG + 마스크로 네온 노랑 */
+  background-color: #f5ff3d;
+  -webkit-mask-image: url("/why-stance-brush-underline.png");
+  mask-image: url("/why-stance-brush-underline.png");
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center bottom;
+  mask-position: center bottom;
+  opacity: 0;
+  transform: rotate(-2deg) translateY(10px) scaleX(0.08);
+  transform-origin: left center;
+  transition:
+    opacity 0.38s ease,
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  filter: drop-shadow(0 0 5px rgba(245, 255, 61, 0.85))
+    drop-shadow(0 0 10px rgba(245, 255, 61, 0.45));
+}
+
+.stance-why-hover-scope:hover .stance-scribble-title::after {
+  opacity: 1;
+  transform: rotate(-2deg) translateY(0) scaleX(1);
+}
+
+/* PC(701px~) — 노란 스크리블 밑줄 비표시 · 모바일만 유지 */
+@media (min-width: 701px) {
+  .stance-scribble-title::after {
+    display: none;
+  }
+
+  .stance-scribble-title {
+    padding-bottom: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stance-scribble-title::after {
+    transition: opacity 0.15s ease;
+  }
+}
+
+/* WHY STANCE — 섹션(공간) 호버 시 이미지가 프레임 안에서 살짝 확대 (밑줄과 동일 트리거, img에 직접 scale → 체감 확실) */
+.stance-why-hover-scope {
+  isolation: isolate;
+}
+
+.stance-why-img-outer {
+  position: relative;
+  z-index: 0;
+}
+
+.stance-why-img-outer img {
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: scale(1);
+  transform-origin: center center;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .stance-why-hover-scope:hover .stance-why-img-outer {
+    z-index: 1;
+  }
+
+  .stance-why-hover-scope:hover .stance-why-img-outer img {
+    transform: scale(1.1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stance-why-img-outer img {
+    transition: none;
+    will-change: auto;
+  }
+}
+
+@keyframes stance-tape-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/** 메인 히어로 배경 — 천천히 커졌다 작아지는 루프 */
+@keyframes stance-hero-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+}
+
+@layer utilities {
+  .scroll-mt-header {
+    scroll-margin-top: var(--section-scroll-mt);
+  }
+
+  .animate-stance-tape-marquee {
+    animation: stance-tape-marquee 42s linear infinite;
+    will-change: transform;
+  }
+
+  .animate-stance-transformation-marquee {
+    animation: stance-tape-marquee 50s linear infinite;
+    will-change: transform;
+  }
+
+  .animate-stance-hero-breathe {
+    animation: stance-hero-breathe 6s ease-in-out infinite;
+    will-change: transform;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-stance-tape-marquee {
+    animation: none;
+  }
+
+  .animate-stance-transformation-marquee {
+    animation: none;
+  }
+
+  .animate-stance-hero-breathe {
+    animation: none;
+  }
+}
