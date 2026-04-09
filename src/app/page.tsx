@@ -21,7 +21,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main className="min-h-screen overflow-x-hidden bg-[#09080e]">
+      <main className="min-h-screen overflow-x-clip bg-[#09080e]">
         <Hero />
         <ScrollReveal>
           <SpaceTrainingSection />

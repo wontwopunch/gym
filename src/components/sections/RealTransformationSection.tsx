@@ -32,7 +32,7 @@ export function RealTransformationSection() {
   return (
     <section
       id="member-transformation"
-      className="relative scroll-mt-header w-full overflow-x-hidden bg-[#09080e] py-12 max-[735px]:py-14 lg:py-[140px]"
+      className="relative scroll-mt-header w-full overflow-x-clip bg-[#09080e] py-12 max-[735px]:py-14 lg:py-[140px]"
       aria-label="REAL TRANSFORMATION 회원 변화 갤러리"
       data-node-id="173:395"
     >
