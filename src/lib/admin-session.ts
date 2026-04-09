@@ -111,8 +111,8 @@ export async function readSessionFromRequest(
 }
 
 export function getDefaultAdminCredentials(): { user: string; pass: string } {
-  return {
-    user: process.env.ADMIN_USERNAME ?? "admin",
-    pass: process.env.ADMIN_PASSWORD ?? "admin",
-  };
+  // .env 에 빈 문자열이 있으면 ?? 로는 기본값이 안 들어가므로 trim + || 사용
+  const user = process.env.ADMIN_USERNAME?.trim() || "admin";
+  const pass = process.env.ADMIN_PASSWORD?.trim() || "admin";
+  return { user, pass };
 }
